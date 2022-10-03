@@ -15,15 +15,15 @@ public class UserDao implements UserRepository {
     public Future<User> getAllUser() {
 
         Promise<User> promise = Promise.promise();
-        MySqlConnector.query("")
+        MySqlConnector.query("select * from ecom_be.user_tb")
             .onSuccess(resultSet -> {
-                resultSet.getNext();
+                System.out.println(resultSet.toJson());
+//                String mail = resultSet.getNext();
                 User u = new User();
                 promise.complete(u);
             }).onFailure(throwable->{
                 promise.fail(throwable.getCause());
             });
-
 
         return promise.future();
     }
